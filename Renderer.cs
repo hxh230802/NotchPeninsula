@@ -413,8 +413,14 @@ namespace NotchPeninsula
             EnsureIconsLoaded();
             SKBitmap? targetIcon = null;
 
-            if (toast.ProcessName.Contains("QQ", StringComparison.OrdinalIgnoreCase) ||
-                toast.AppName.Contains("QQ", StringComparison.OrdinalIgnoreCase))
+            // 插件提醒可指定自定义图标路径，优先使用；否则回退到 QQ/默认图标
+            if (!string.IsNullOrEmpty(toast.IconPath))
+            {
+                try { targetIcon = SKBitmap.Decode(toast.IconPath); } catch { targetIcon = null; }
+            }
+            if (targetIcon == null &&
+                (toast.ProcessName.Contains("QQ", StringComparison.OrdinalIgnoreCase) ||
+                 toast.AppName.Contains("QQ", StringComparison.OrdinalIgnoreCase)))
             {
                 targetIcon = _qqIcon;
             }

@@ -268,6 +268,10 @@ namespace NotchPeninsula
         public UserNotification? InternalNotification { get; set; }
         // best-effort process name for display
         public string ProcessName { get; set; } = "";
+        // 插件提醒扩展：自定义图标路径 / 展示时长 / 点击回调
+        public string? IconPath { get; set; }
+        public TimeSpan Duration { get; set; } = TimeSpan.FromSeconds(4);
+        public Action? OnClick { get; set; }
     }
     
     public class ToastMessage

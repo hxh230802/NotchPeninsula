@@ -49,7 +49,10 @@ public sealed class PluginHost
             Title = reminder.Title,
             Body = reminder.Body,
             ProcessName = "PluginReminder",
-            NotificationId = (uint)Environment.TickCount
+            NotificationId = (uint)Environment.TickCount,
+            IconPath = reminder.IconPath,
+            Duration = reminder.Duration,
+            OnClick = reminder.OnClick,
         };
         Logger.Info($"[PluginHost] 插件提醒已投递: {reminder.Title} — {reminder.Body}");
         ReminderPosted?.Invoke(toast);

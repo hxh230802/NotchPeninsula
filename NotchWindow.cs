@@ -279,7 +279,7 @@ namespace NotchPeninsula
             }
 
             _currentToast = toast;
-            _toastEndTime = DateTime.Now.AddSeconds(4); // 消息展示4秒自动消失
+            _toastEndTime = DateTime.Now.Add(toast.Duration); // 按提醒指定时长展示
         }
 
         // 剪贴板内容变化回调：提取第一个 http/https 链接并展示
@@ -1032,6 +1032,14 @@ namespace NotchPeninsula
                         if (IsClipboardLinkActive())
                         {
                             if (IsOverClipboardButton(cx, cy)) OpenCurrentClipboardLink();
+                            return (IntPtr)0;
+                        }
+
+                        // 提醒展示期：点击触发 OnClick 并关闭提醒
+                        if (isToastActive && _currentToast != null)
+                        {
+                            _currentToast.OnClick?.Invoke();
+                            _currentToast = null;
                             return (IntPtr)0;
                         }
 
